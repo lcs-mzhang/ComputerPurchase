@@ -5,20 +5,44 @@
 
 import Foundation
 
+func unwrap(variable: Substring) -> Int {
+    guard let integerVariable = Int(variable) else {
+        print("Unwrap failed! If I didn't make a fancy function thing, XCode would have crashed!")
+        return 0
+    }
+    return integerVariable
+}
+
+
 // INPUT
 // Global variable, tracks how many computers we are going to collect specs for
-var countOfExpectedSpecsThatWillBeProvided = 3
 
-// Write a loop to actually determine how many computer specs the user will provide
-// e.g.: write the rest of the INPUT section
+var expectedSpecs = 0
 
+while true {
+    print("How many specs will be provided?")
+    guard let givenInput = readLine() else {
+        continue
+    }
+    guard let integerInput = Int(givenInput) else {
+        continue
+    }
+    if integerInput < 1 || integerInput > 10 {
+        continue
+    }
+    expectedSpecs = integerInput
+    break
+}
 
 // PROCESS & OUTPUT
 // Implement the primary logic of the problem here
 // Some output may be given here if you desire
 
+var highestName = ""
+
 // Collect the list of computer specs here
-for counter in 1...countOfExpectedSpecsThatWillBeProvided {
+for counter in 1...expectedSpecs {
+    //these computers must from the stone age if they're running on processors with speed measured in megahertz
     
     // Ask user for the specs for a given computer
     print("Spec \(counter)?")
@@ -31,23 +55,21 @@ for counter in 1...countOfExpectedSpecsThatWillBeProvided {
     }
     
     // What was provided?
-    print("The given input was: \(givenInput)")
+    var splitInput = givenInput.split(separator: " ")
+    let name = String(splitInput[0])
+    let RAM = unwrap(variable: splitInput[1])
+    let CPU = unwrap(variable: splitInput[2])
+    let diskSpace = unwrap(variable: splitInput[3])
     
-    // NOTE:
-    //
-    // Some example code that may be useful
-    let exampleInput = "SuperFastComputer 1000 50 75"
-    print("The example input is: \(exampleInput)")
-    let exampleInputPieces = exampleInput.split(separator: " ")
-    let computerName = exampleInputPieces[0]
-    let computerRAM = exampleInputPieces[1]
-    let computerCPU = exampleInputPieces[2]
-    let computerDiskSpace = exampleInputPieces[3]
-    print("Computer name is: \(computerName)")
-    print("Computer RAM amount is: \(computerRAM)")
-    print("Computer CPU speed is: \(computerCPU)")
-    print("Computer disk space is: \(computerDiskSpace)")
+    let specFormula = (2*RAM) + (3*CPU) + diskSpace
+    var highest = 0
+    if specFormula > highest {
+        highest = specFormula
+        highestName = name
+    }
     
     // Implement the rest of your logic here...
-    
+    //no thanks
 }
+
+print("The best computer for you is \(highestName).")
