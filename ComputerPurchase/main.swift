@@ -55,7 +55,7 @@ for counter in 1...expectedSpecs {
     }
     
     // What was provided?
-    var splitInput = givenInput.split(separator: " ")
+    let splitInput = givenInput.split(separator: " ")
     let name = String(splitInput[0])
     let RAM = unwrap(variable: splitInput[1])
     let CPU = unwrap(variable: splitInput[2])
